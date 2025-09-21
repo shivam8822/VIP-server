@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Watch & Earn App</title>
+  <style>
+    body { font-family: Arial, sans-serif; text-align: center; background:#111; color:#fff; }
+    h1 { color: #ffcc00; }
+    .btn {
+      display:inline-block; margin:20px; padding:15px 25px;
+      background:#e50914; color:#fff; border-radius:8px;
+      text-decoration:none; font-size:18px; font-weight:bold;
+    }
+    .wallet { margin-top:30px; font-size:20px; }
+  </style>
+</head>
+<body>
+  <h1>🎥 Watch & Earn</h1>
+  <p>Video dekho, shortlink kholo aur paisa kamao!</p>
+
+  <!-- Tumhari earning shortlink -->
+  <a class="btn" href="https://link.onylinks.com/HqtbC" target="_blank" onclick="addEarning()">
+    👉 Watch Video & Earn
+  </a>
+
+  <div class="wallet">
+    💰 Current Balance: <span id="balance">0</span> Coins
+  </div>
+
+  <script>
+    async function loadBalance() {
+      let res = await fetch("https://your-backend.onrender.com/api/wallet");
+      let data = await res.json();
+      document.getElementById("balance").innerText = data.balance;
+    }
+
+    async function addEarning() {
+      let res = await fetch("https://your-backend.onrender.com/api/click");
+      let data = await res.json();
+      document.getElementById("balance").innerText = data.balance;
+    }
+
+    loadBalance();
+  </script>
+</body>
+</html>
