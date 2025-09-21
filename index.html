@@ -30,7 +30,7 @@
 
   <script>
     async function loadBalance() {
-      let res = await fetch("https://your-backend.onrender.com/api/wallet");
+      let res = await fetch("https://vip-server-2-o.onrender.com/");
       let data = await res.json();
       document.getElementById("balance").innerText = data.balance;
     }
