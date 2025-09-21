@@ -1,47 +1,73 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>Watch & Earn App</title>
   <style>
-    body { font-family: Arial, sans-serif; text-align: center; background:#111; color:#fff; }
-    h1 { color: #ffcc00; }
-    .btn {
-      display:inline-block; margin:20px; padding:15px 25px;
-      background:#e50914; color:#fff; border-radius:8px;
-      text-decoration:none; font-size:18px; font-weight:bold;
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
     }
-    .wallet { margin-top:30px; font-size:20px; }
+    h1 {
+      color: #ffd700;
+    }
+    .wallet {
+      margin: 20px 0;
+      font-size: 22px;
+      font-weight: bold;
+    }
+    button {
+      background: #ffd700;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #e6c200;
+    }
   </style>
 </head>
 <body>
   <h1>🎥 Watch & Earn</h1>
-  <p>Video dekho, shortlink kholo aur paisa kamao!</p>
-
-  <!-- Tumhari earning shortlink -->
-  <a class="btn" href="https://link.onylinks.com/HqtbC" target="_blank" onclick="addEarning()">
-    👉 Watch Video & Earn
-  </a>
-
-  <div class="wallet">
-    💰 Current Balance: <span id="balance">0</span> Coins
-  </div>
+  <div class="wallet">Wallet Balance: <span id="balance">0</span> coins</div>
+  <button onclick="watchAndEarn()">Watch & Earn</button>
 
   <script>
-    async function loadBalance() {
-      let res = await fetch("https://vip-server-2-o.onrender.com/");
-      let data = await res.json();
-      document.getElementById("balance").innerText = data.balance;
+    async function loadWallet() {
+      try {
+        let res = await fetch("https://vip-server-2-o.onrender.com/api/wallet");
+        let data = await res.json();
+        document.getElementById("balance").innerText = data.balance;
+      } catch (e) {
+        console.error("Wallet load error:", e);
+      }
     }
 
-    async function addEarning() {
-      let res = await fetch("https://your-backend.onrender.com/api/click");
-      let data = await res.json();
-      document.getElementById("balance").innerText = data.balance;
+    async function watchAndEarn() {
+      // Open shortlink
+      window.open("https://link.onylinks.com/HqtbC", "_blank");
+
+      // Update wallet
+      try {
+        let res = await fetch("https://vip-server-2-o.onrender.com/api/earn", { method: "POST" });
+        let data = await res.json();
+        document.getElementById("balance").innerText = data.balance;
+      } catch (e) {
+        console.error("Earn error:", e);
+      }
     }
 
-    loadBalance();
+    // Load wallet on page open
+    loadWallet();
   </script>
 </body>
 </html>
